@@ -1,3 +1,9 @@
+# -*- coding: utf-8 -*-
+
+# Form implementation generated from reading ui file 'version2.ui'
+#
+# Created by: PyQt5 UI code generator 5.15.4
+
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
@@ -508,4 +514,3 @@ if __name__ == "__main__":
     ui.setupUi(mainWindow)
     mainWindow.show()
     sys.exit(app.exec_())
-
