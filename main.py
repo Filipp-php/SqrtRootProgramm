@@ -8,7 +8,7 @@ from locale import lang
 class Ui_mainWindow(object):
     def setupUi(self, mainWindow):
         mainWindow.setObjectName("mainWindow")
-        mainWindow.resize(400, 475)
+        mainWindow.setFixedSize(400, 475)
         font = QtGui.QFont()
         font.setFamily("Lucida Console")
         font.setPointSize(10)
@@ -510,7 +510,11 @@ class Ui_mainWindow(object):
         self.mExit.setText(_translate("mainWindow", "Выход"))
 
     def result_c(self):
-        if self.ladel_c_res1.text().find("=") == -1:
+        self.clear_res()
+        if (self.lab_real.text() != '-'
+            and self.lab_real.text() != '.'
+            and self.lab_imaginary.text() != '-'
+            and self.lab_imaginary.text() != '.'):
                 a = float(self.lab_real.text())
                 b = float(self.lab_imaginary.text())
                 c = complex(str(a) + "+" + str(b) + "j")
@@ -526,12 +530,15 @@ class Ui_mainWindow(object):
                     sin2 = math.sin((f + 2 * 3.14) / 2)
                     res1 = str(round(math.sqrt(r) * cos, 2)) + " + (" + str(round(math.sqrt(r) * sin, 2)) + ") * i"
                     res2 = str(round(math.sqrt(r) * cos2, 2)) + " + (" + str(round(math.sqrt(r) * sin2, 2)) + ") * i"
-                    self.ladel_c_res1.setText(self.ladel_c_res1.text() + " =" + res1)
-                    self.ladel_c_res2.setText(self.ladel_c_res2.text() + " =" + res2)
+                    self.ladel_c_res1.setText(self.ladel_c_res1.text() + " " + res1)
+                    self.ladel_c_res2.setText(self.ladel_c_res2.text() + " " + res2)
                 else:
                     res = cmath.sqrt(c)
-                    self.ladel_c_res1.setText(self.ladel_c_res1.text() + " =" + str(round(res.real, 2) + round(res.imag,2) * 1j))
-                    self.ladel_c_res2.setText("=Второго корня в данной ситуации нет")
+                    self.ladel_c_res1.setText(self.ladel_c_res1.text() + " " + str(round(res.real, 2) + round(res.imag, 2) * 1j))
+                    self.ladel_c_res2.setText("Второго корня в данной ситуации нет")
+        else:
+            self.ladel_c_res1.setText("Кажется число (" + self.lab_real.text() + " + " + self.lab_imaginary.text() + "*i) не похоже ")
+            self.ladel_c_res2.setText("на комплексное:)")
 
 
     def rbtn_click_r(self):
@@ -643,7 +650,10 @@ class Ui_mainWindow(object):
 
     def result1(self):
         if self.label_result1.text().find("=") == -1:
-            self.label_result1.setText("= " + str(round(math.sqrt(float(self.label_result1.text())), 2)))
+            if self.label_result1.text() != '.':
+                self.label_result1.setText("= " + str(round(math.sqrt(float(self.label_result1.text())), 2)))
+            else:
+                self.label_result1.setText("'.' не число:)")
 
     def write_num1(self, num):
         if num == 'C' and self.label_result1.text().find("=") == -1:
