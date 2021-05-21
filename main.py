@@ -1,4 +1,8 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
+import sys
+import math
+import cmath
+from locale import lang
 
 
 class Ui_mainWindow(object):
@@ -434,6 +438,12 @@ class Ui_mainWindow(object):
         self.menubar.addAction(self.menu.menuAction())
 
         self.retranslateUi(mainWindow)
+        self.btn_click()
+        self.rB_real.toggled.connect(self.rbtn_click_r)
+        self.rB_im.toggled.connect(self.rbtn_click_i)
+        self.btn_c_result.clicked.connect(self.result_c)
+        self.btn_c_clear_all.clicked.connect(lambda: self.write_num_im(self.btn_c_clear_all.text()))
+
         self.Tabs.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(mainWindow)
 
@@ -483,7 +493,7 @@ class Ui_mainWindow(object):
         self.label_i.setText(_translate("mainWindow", "* i "))
         self.ladel_c_res2.setText(_translate("mainWindow", "Второй корень:"))
         self.btn_c_clear_all.setText(_translate("mainWindow", "CE"))
-        self.Tabs.setTabText(self.Tabs.indexOf(self.complex), _translate("mainWindow", "Комплекные"))
+        self.Tabs.setTabText(self.Tabs.indexOf(self.complex), _translate("mainWindow", "Комплексные"))
         self.menu.setTitle(_translate("mainWindow", "Меню"))
         self.lang.setTitle(_translate("mainWindow", "Язык"))
         self.help.setTitle(_translate("mainWindow", "Помощь"))
@@ -499,9 +509,194 @@ class Ui_mainWindow(object):
         self.action_10.setText(_translate("mainWindow", "Выход"))
         self.mExit.setText(_translate("mainWindow", "Выход"))
 
+    def result_c(self):
+        if self.ladel_c_res1.text().find("=") == -1:
+                a = float(self.lab_real.text())
+                b = float(self.lab_imaginary.text())
+                c = complex(str(a) + "+" + str(b) + "j")
+                if b == 0:
+                    self.ladel_c_res1.setText("=Число не комплексное; для его вычис-")
+                    self.ladel_c_res2.setText("ления перейдите на другой калькулятор")
+                elif a != 0:
+                    r = math.sqrt(a * a + b * b)
+                    f = math.atan(b / a)
+                    cos = math.cos(f / 2.0)
+                    sin = math.sin(f / 2.0)
+                    cos2 = math.cos((f + 2 * 3.14) / 2)
+                    sin2 = math.sin((f + 2 * 3.14) / 2)
+                    res1 = str(round(math.sqrt(r) * cos, 2)) + " + (" + str(round(math.sqrt(r) * sin, 2)) + ") * i"
+                    res2 = str(round(math.sqrt(r) * cos2, 2)) + " + (" + str(round(math.sqrt(r) * sin2, 2)) + ") * i"
+                    self.ladel_c_res1.setText(self.ladel_c_res1.text() + " =" + res1)
+                    self.ladel_c_res2.setText(self.ladel_c_res2.text() + " =" + res2)
+                else:
+                    res = cmath.sqrt(c)
+                    self.ladel_c_res1.setText(self.ladel_c_res1.text() + " =" + str(round(res.real, 2) + round(res.imag,2) * 1j))
+                    self.ladel_c_res2.setText("=Второго корня в данной ситуации нет")
+
+
+    def rbtn_click_r(self):
+        if self.rB_real.isSignalConnected:
+            self.rB_real.disconnect()
+            self.rB_real.toggled.connect(self.rbtn_click_r)
+            self.disconn()
+            self.btn_c_0.clicked.connect(lambda: self.write_num_real(self.btn_c_0.text()))
+            self.btn_c_1.clicked.connect(lambda: self.write_num_real(self.btn_c_1.text()))
+            self.btn_c_2.clicked.connect(lambda: self.write_num_real(self.btn_c_2.text()))
+            self.btn_c_3.clicked.connect(lambda: self.write_num_real(self.btn_c_3.text()))
+            self.btn_c_4.clicked.connect(lambda: self.write_num_real(self.btn_c_4.text()))
+            self.btn_c_5.clicked.connect(lambda: self.write_num_real(self.btn_c_5.text()))
+            self.btn_c_6.clicked.connect(lambda: self.write_num_real(self.btn_c_6.text()))
+            self.btn_c_7.clicked.connect(lambda: self.write_num_real(self.btn_c_7.text()))
+            self.btn_c_8.clicked.connect(lambda: self.write_num_real(self.btn_c_8.text()))
+            self.btn_c_9.clicked.connect(lambda: self.write_num_real(self.btn_c_9.text()))
+            self.btn_c_point.clicked.connect(lambda: self.write_num_real(self.btn_c_point.text()))
+            self.btn_c_clear.clicked.connect(lambda: self.write_num_real(self.btn_c_clear.text()))
+            self.btn_c_minus.clicked.connect(lambda: self.write_num_real(self.btn_c_minus.text()))
+
+    def rbtn_click_i(self):
+        if self.rB_im.isSignalConnected:
+            self.rB_im.disconnect()
+            self.rB_im.toggled.connect(self.rbtn_click_i)
+            self.disconn()
+            self.btn_c_0.clicked.connect(lambda: self.write_num_im(self.btn_c_0.text()))
+            self.btn_c_1.clicked.connect(lambda: self.write_num_im(self.btn_c_1.text()))
+            self.btn_c_2.clicked.connect(lambda: self.write_num_im(self.btn_c_2.text()))
+            self.btn_c_3.clicked.connect(lambda: self.write_num_im(self.btn_c_3.text()))
+            self.btn_c_4.clicked.connect(lambda: self.write_num_im(self.btn_c_4.text()))
+            self.btn_c_5.clicked.connect(lambda: self.write_num_im(self.btn_c_5.text()))
+            self.btn_c_6.clicked.connect(lambda: self.write_num_im(self.btn_c_6.text()))
+            self.btn_c_7.clicked.connect(lambda: self.write_num_im(self.btn_c_7.text()))
+            self.btn_c_8.clicked.connect(lambda: self.write_num_im(self.btn_c_8.text()))
+            self.btn_c_9.clicked.connect(lambda: self.write_num_im(self.btn_c_9.text()))
+            self.btn_c_point.clicked.connect(lambda: self.write_num_im(self.btn_c_point.text()))
+            self.btn_c_clear.clicked.connect(lambda: self.write_num_im(self.btn_c_clear.text()))
+            self.btn_c_minus.clicked.connect(lambda: self.write_num_im(self.btn_c_minus.text()))
+
+    def clear_res(self):
+        if self.ladel_c_res1.text().find("=") != -1:
+            self.ladel_c_res1.setText("Первый корень:")
+            self.ladel_c_res2.setText("Второй корень:")
+
+    def write_num_real(self, num):
+        self.clear_res()
+        if num == 'C' and self.lab_real.text().find("=") == -1:
+            if len(self.lab_real.text()) == 1:
+                self.lab_real.setText("0")
+            else:
+                self.lab_real.setText(self.lab_real.text()[:-1])
+        elif num == 'C' and self.lab_real.text().find("=") != -1:
+            self.lab_real.setText("0")
+        elif num == 'CE':
+            self.lab_real.setText("0")
+            self.lab_imaginary.setText("0")
+        elif self.lab_real.text() == '0':
+            self.lab_real.setText(num)
+        else:
+            if len(self.lab_real.text()) < 10:
+                if  num == '.' and self.lab_real.text().find('.') != -1:
+                    self.lab_real.setText(self.lab_real.text())
+                elif num == '-' and (self.lab_real.text() != '0'):
+                    self.lab_real.setText(self.lab_real.text())
+                else:
+                    self.lab_real.setText(self.lab_real.text() + num)
+
+
+
+    def write_num_im(self, num):
+        self.clear_res()
+        if num == 'C' and self.lab_imaginary.text().find("=") == -1:
+            if len(self.lab_imaginary.text()) == 1:
+                self.lab_imaginary.setText("0")
+            else:
+                self.lab_imaginary.setText(self.lab_imaginary.text()[:-1])
+        elif num == 'C' and self.lab_imaginary.text().find("=") != -1:
+            self.lab_imaginary.setText("0")
+        elif num == 'CE':
+            self.lab_real.setText("0")
+            self.lab_imaginary.setText("0")
+        elif self.lab_imaginary.text() == '0':
+            self.lab_imaginary.setText(num)
+        else:
+            if len(self.lab_imaginary.text()) < 10:
+                if  num == '.' and self.lab_imaginary.text().find('.') != -1:
+                    self.lab_imaginary.setText(self.lab_imaginary.text())
+                elif num == '-' and (self.lab_imaginary.text() != '0'):
+                    self.lab_imaginary.setText(self.lab_imaginary.text())
+                else:
+                    self.lab_imaginary.setText(self.lab_imaginary.text() + num)
+
+    def btn_click(self):
+        self.btn_0.clicked.connect(lambda: self.write_num1(self.btn_0.text()))
+        self.btn_1.clicked.connect(lambda: self.write_num1(self.btn_1.text()))
+        self.btn_2.clicked.connect(lambda: self.write_num1(self.btn_2.text()))
+        self.btn_3.clicked.connect(lambda: self.write_num1(self.btn_3.text()))
+        self.btn_4.clicked.connect(lambda: self.write_num1(self.btn_4.text()))
+        self.btn_5.clicked.connect(lambda: self.write_num1(self.btn_5.text()))
+        self.btn_6.clicked.connect(lambda: self.write_num1(self.btn_6.text()))
+        self.btn_7.clicked.connect(lambda: self.write_num1(self.btn_7.text()))
+        self.btn_8.clicked.connect(lambda: self.write_num1(self.btn_8.text()))
+        self.btn_9.clicked.connect(lambda: self.write_num1(self.btn_9.text()))
+        self.btn_point.clicked.connect(lambda: self.write_num1(self.btn_point.text()))
+        self.btn_clear_el.clicked.connect(lambda: self.write_num1(self.btn_clear_el.text()))
+        self.btn_clear_all.clicked.connect(lambda: self.write_num1(self.btn_clear_all.text()))
+        self.btn_result.clicked.connect(self.result1)
+
+    def result1(self):
+        if self.label_result1.text().find("=") == -1:
+            self.label_result1.setText("= " + str(round(math.sqrt(float(self.label_result1.text())), 2)))
+
+    def write_num1(self, num):
+        if num == 'C' and self.label_result1.text().find("=") == -1:
+            if len(self.label_result1.text()) == 1:
+                self.label_result1.setText("0")
+            else:
+                self.label_result1.setText(self.label_result1.text()[:-1])
+        elif num == 'C' and self.label_result1.text().find("=") != -1:
+            self.label_result1.setText("0")
+        elif num == 'CE':
+            self.label_result1.setText("0")
+        elif self.label_result1.text() == '0' or self.label_result1.text().find("=") != -1:
+            self.label_result1.setText(num)
+        else:
+            if len(self.label_result1.text()) < 10:
+                if num == '.' and self.label_result1.text().find('.') != -1:
+                    self.label_result1.setText(self.label_result1.text())
+                else:
+                    self.label_result1.setText(self.label_result1.text() + num)
+
+    def disconn(self):
+        if self.btn_c_0.isSignalConnected:
+            self.btn_c_0.disconnect()
+        if self.btn_c_1.isSignalConnected:
+            self.btn_c_1.disconnect()
+        if self.btn_c_2.isSignalConnected:
+            self.btn_c_2.disconnect()
+        if self.btn_c_3.isSignalConnected:
+            self.btn_c_3.disconnect()
+        if self.btn_c_4.isSignalConnected:
+            self.btn_c_4.disconnect()
+        if self.btn_c_5.isSignalConnected:
+            self.btn_c_5.disconnect()
+        if self.btn_c_6.isSignalConnected:
+            self.btn_c_6.disconnect()
+        if self.btn_c_7.isSignalConnected:
+            self.btn_c_7.disconnect()
+        if self.btn_c_8.isSignalConnected:
+            self.btn_c_8.disconnect()
+        if self.btn_c_9.isSignalConnected:
+            self.btn_c_9.disconnect()
+        if self.btn_c_point.isSignalConnected:
+            self.btn_c_point.disconnect()
+        if self.btn_c_clear.isSignalConnected:
+            self.btn_c_clear.disconnect()
+        if self.btn_c_minus.isSignalConnected:
+            self.btn_c_minus.disconnect()
+
+
+
+
 
 if __name__ == "__main__":
-    import sys
     app = QtWidgets.QApplication(sys.argv)
     mainWindow = QtWidgets.QMainWindow()
     ui = Ui_mainWindow()
