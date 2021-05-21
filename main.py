@@ -540,7 +540,6 @@ class Ui_mainWindow(object):
             self.ladel_c_res1.setText("Кажется число (" + self.lab_real.text() + " + " + self.lab_imaginary.text() + "*i) не похоже ")
             self.ladel_c_res2.setText("на комплексное:)")
 
-
     def rbtn_click_r(self):
         if self.rB_real.isSignalConnected:
             self.rB_real.disconnect()
@@ -606,8 +605,6 @@ class Ui_mainWindow(object):
                     self.lab_real.setText(self.lab_real.text())
                 else:
                     self.lab_real.setText(self.lab_real.text() + num)
-
-
 
     def write_num_im(self, num):
         self.clear_res()
@@ -701,9 +698,6 @@ class Ui_mainWindow(object):
             self.btn_c_clear.disconnect()
         if self.btn_c_minus.isSignalConnected:
             self.btn_c_minus.disconnect()
-
-
-
 
 
 if __name__ == "__main__":
