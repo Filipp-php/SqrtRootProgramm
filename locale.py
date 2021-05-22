@@ -1,3 +1,3 @@
 lang = {
-    'rus': True,
-    'en': False}
+    'rus': False,
+    'en': True}

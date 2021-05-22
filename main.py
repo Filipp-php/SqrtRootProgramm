@@ -1,4 +1,5 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtWidgets import qApp
 import sys
 import math
 import cmath
@@ -400,10 +401,6 @@ class Ui_mainWindow(object):
         self.help = QtWidgets.QMenu(self.menu)
         self.help.setObjectName("help")
         mainWindow.setMenuBar(self.menubar)
-        self.action_2 = QtWidgets.QAction(mainWindow)
-        self.action_2.setObjectName("action_2")
-        self.action_3 = QtWidgets.QAction(mainWindow)
-        self.action_3.setObjectName("action_3")
         self.rus = QtWidgets.QAction(mainWindow)
         self.rus.setCheckable(True)
         self.rus.setChecked(True)
@@ -411,18 +408,12 @@ class Ui_mainWindow(object):
         self.en = QtWidgets.QAction(mainWindow)
         self.en.setCheckable(True)
         self.en.setObjectName("en")
-        self.action_8 = QtWidgets.QAction(mainWindow)
-        self.action_8.setObjectName("action_8")
-        self.action = QtWidgets.QAction(mainWindow)
-        self.action.setObjectName("action")
         self.ref = QtWidgets.QAction(mainWindow)
         self.ref.setObjectName("ref")
         self.forum = QtWidgets.QAction(mainWindow)
         self.forum.setObjectName("forum")
         self.about = QtWidgets.QAction(mainWindow)
         self.about.setObjectName("about")
-        self.action_10 = QtWidgets.QAction(mainWindow)
-        self.action_10.setObjectName("action_10")
         self.mExit = QtWidgets.QAction(mainWindow)
         self.mExit.setObjectName("mExit")
         self.lang.addSeparator()
@@ -437,6 +428,13 @@ class Ui_mainWindow(object):
         self.menu.addAction(self.mExit)
         self.menubar.addAction(self.menu.menuAction())
 
+        self.rus.triggered.connect(self.switch_rus)
+        self.en.triggered.connect(self.switch_en)
+        self.ref.triggered.connect(self.ref)
+        self.about.triggered.connect(self.about)
+        self.forum.triggered.connect(self.forum)
+        self.mExit.triggered.connect(qApp.quit)
+
         self.setNumName(mainWindow)
         self.retranslateUi(mainWindow)
         self.btn_click()
@@ -448,9 +446,18 @@ class Ui_mainWindow(object):
         self.Tabs.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(mainWindow)
 
+    def switch_rus(self):
+        pass
+    def switch_en(self):
+        pass
+    def about(self):
+        pass
+
     def setNumName(self, mainWindow):
             _translate = QtCore.QCoreApplication.translate
             mainWindow.setWindowTitle(_translate("mainWindow", "Sqrt"))
+            self.rus.setText(_translate("mainWindow", "Русский"))
+            self.en.setText(_translate("mainWindow", "English"))
             self.btn_6.setText(_translate("mainWindow", "6"))
             self.btn_4.setText(_translate("mainWindow", "4"))
             self.btn_5.setText(_translate("mainWindow", "5"))
@@ -480,51 +487,67 @@ class Ui_mainWindow(object):
             self.btn_c_point.setText(_translate("mainWindow", "."))
             self.lab_real.setText(_translate("mainWindow", "0"))
             self.lab_imaginary.setText(_translate("mainWindow", "0"))
+            self.btn_c_minus.setText(_translate("mainWindow", "-"))
+            self.btn_c_clear.setText(_translate("mainWindow", "C"))
+            self.label_pl.setText(_translate("mainWindow", "+"))
+            self.label_i.setText(_translate("mainWindow", "* i "))
+            self.btn_c_clear_all.setText(_translate("mainWindow", "CE"))
 
     def retranslateUi(self, mainWindow):
         _translate = QtCore.QCoreApplication.translate
-        mainWindow.setWindowTitle(_translate("mainWindow", "Sqrt"))
-        self.ladel_c_res1.setText(_translate("mainWindow", "Первый корень:"))
-        self.Tabs.setTabText(self.Tabs.indexOf(self.arifm), _translate("mainWindow", "Арифметические"))
-        self.rB_real.setText(_translate("mainWindow", "Вводить \n"
-                                                      "действительную\n"
-                                                      "часть"))
-        self.rB_im.setText(_translate("mainWindow", "Вводить \n"
-                                                    "мнимую\n"
-                                                    "часть"))
-        self.btn_c_minus.setText(_translate("mainWindow", "-"))
-        self.btn_c_clear.setText(_translate("mainWindow", "C"))
-        self.label_pl.setText(_translate("mainWindow", "+"))
-        self.label_i.setText(_translate("mainWindow", "* i "))
-        self.ladel_c_res2.setText(_translate("mainWindow", "Второй корень:"))
-        self.btn_c_clear_all.setText(_translate("mainWindow", "CE"))
-        self.Tabs.setTabText(self.Tabs.indexOf(self.complex), _translate("mainWindow", "Комплексные"))
-        self.menu.setTitle(_translate("mainWindow", "Меню"))
-        self.lang.setTitle(_translate("mainWindow", "Язык"))
-        self.help.setTitle(_translate("mainWindow", "Помощь"))
-        self.action_2.setText(_translate("mainWindow", "Целые"))
-        self.action_3.setText(_translate("mainWindow", "Справка"))
-        self.rus.setText(_translate("mainWindow", "Русский"))
-        self.en.setText(_translate("mainWindow", "English"))
-        self.action_8.setText(_translate("mainWindow", "Комплексные"))
-        self.action.setText(_translate("mainWindow", "О программе"))
-        self.ref.setText(_translate("mainWindow", "Справка"))
-        self.forum.setText(_translate("mainWindow", "Форум поддержки"))
-        self.about.setText(_translate("mainWindow", "О программе"))
-        self.action_10.setText(_translate("mainWindow", "Выход"))
-        self.mExit.setText(_translate("mainWindow", "Выход"))
+        if lang['en']:
+                self.ladel_c_res1.setText(_translate("mainWindow", "First result:"))
+                self.Tabs.setTabText(self.Tabs.indexOf(self.arifm), _translate("mainWindow", "Arithmetic"))
+                self.rB_real.setText(_translate("mainWindow", "Input \n"
+                                                              "real\n"
+                                                              "part"))
+                self.rB_im.setText(_translate("mainWindow", "Input \n"
+                                                            "imaginary\n"
+                                                            "part"))
+                self.ladel_c_res2.setText(_translate("mainWindow", "Second result:"))
+                self.Tabs.setTabText(self.Tabs.indexOf(self.complex), _translate("mainWindow", "Complex"))
+                self.menu.setTitle(_translate("mainWindow", "Menu"))
+                self.lang.setTitle(_translate("mainWindow", "Language"))
+                self.help.setTitle(_translate("mainWindow", "Help"))
+                self.ref.setText(_translate("mainWindow", "References"))
+                self.forum.setText(_translate("mainWindow", "Support forum"))
+                self.about.setText(_translate("mainWindow", "About the product"))
+                self.mExit.setText(_translate("mainWindow", "Exit"))
+        elif lang['rus']:
+                self.ladel_c_res1.setText(_translate("mainWindow", "Первый корень:"))
+                self.Tabs.setTabText(self.Tabs.indexOf(self.arifm), _translate("mainWindow", "Арифметические"))
+                self.rB_real.setText(_translate("mainWindow", "Вводить \n"
+                                                              "действительную\n"
+                                                              "часть"))
+                self.rB_im.setText(_translate("mainWindow", "Вводить \n"
+                                                            "мнимую\n"
+                                                            "часть"))
+                self.ladel_c_res2.setText(_translate("mainWindow", "Второй корень:"))
+                self.Tabs.setTabText(self.Tabs.indexOf(self.complex), _translate("mainWindow", "Комплексные"))
+                self.menu.setTitle(_translate("mainWindow", "Меню"))
+                self.lang.setTitle(_translate("mainWindow", "Язык"))
+                self.help.setTitle(_translate("mainWindow", "Помощь"))
+                self.ref.setText(_translate("mainWindow", "Справка"))
+                self.forum.setText(_translate("mainWindow", "Форум поддержки"))
+                self.about.setText(_translate("mainWindow", "О программе"))
+                self.mExit.setText(_translate("mainWindow", "Выход"))
 
     def result_c(self):
         self.clear_res()
-        if self.lab_real.text()[0] != '-' and self.lab_imaginary.text()[0] != '-':
+        if self.lab_real.text() != '-' and self.lab_imaginary.text() != '-':
                 a = float(self.lab_real.text())
                 b = float(self.lab_imaginary.text())
-                c = complex(str(a) + "+" + str(b) + "j")
-                if b == 0:
-                    self.ladel_c_res1.setText("=Число не комплексное; для его вычис-")
-                    self.ladel_c_res2.setText("ления перейдите на другой калькулятор")
-                elif a != 0:
+                if b == 0 and a >= 0:
+                    if lang['rus']:
+                        self.ladel_c_res1.setText("=Число не комплексное; для его вычис-")
+                        self.ladel_c_res2.setText("ления перейдите на другой калькулятор")
+                    elif lang['en']:
+                        self.ladel_c_res1.setText("=The number is not complex; to calcula-")
+                        self.ladel_c_res2.setText("te this switch to another calculator")
+
+                elif a != 0 and b != 0:
                     r = math.sqrt(a * a + b * b)
+                    print(r)
                     f = math.atan(b / a)
                     cos = math.cos(f / 2.0)
                     sin = math.sin(f / 2.0)
@@ -535,12 +558,24 @@ class Ui_mainWindow(object):
                     self.ladel_c_res1.setText(self.ladel_c_res1.text() + " =" + res1)
                     self.ladel_c_res2.setText(self.ladel_c_res2.text() + " =" + res2)
                 else:
+                    if b > 0:
+                        c = complex(str(a) + "+" + str(b) + "j")
+                    else:
+                        c = complex(str(a) + "-" + str(abs(b)) + "j")
                     res = cmath.sqrt(c)
                     self.ladel_c_res1.setText(self.ladel_c_res1.text() + " =" + str(round(res.real, 2) + round(res.imag, 2) * 1j))
-                    self.ladel_c_res2.setText("Второго корня в данной ситуации нет")
+                    if lang['rus']:
+                        self.ladel_c_res2.setText("Второго корня в данной ситуации нет")
+                    elif lang['en']:
+                        self.ladel_c_res2.setText("There is no second root")
+
         else:
-            self.ladel_c_res1.setText("=Кажется число (" + self.lab_real.text() + " + " + self.lab_imaginary.text() + "*i) не похоже ")
-            self.ladel_c_res2.setText("на комплексное:)")
+            if lang['rus']:
+                self.ladel_c_res1.setText("=Кажется число (" + self.lab_real.text() + " + " + self.lab_imaginary.text() + "*i) не похоже ")
+                self.ladel_c_res2.setText("на комплексное:)")
+            elif lang['en']:
+                self.ladel_c_res1.setText("=It seems the number (" + self.lab_real.text() + " + " + self.lab_imaginary.text() + "*i) ")
+                self.ladel_c_res2.setText("is not complex:)")
 
     def rbtn_click_r(self):
         if self.rB_real.isSignalConnected:
@@ -649,10 +684,7 @@ class Ui_mainWindow(object):
 
     def result1(self):
         if self.label_result1.text().find("=") == -1:
-            if self.label_result1.text()[0] != '.':
-                self.label_result1.setText("= " + str(round(math.sqrt(float(self.label_result1.text())), 2)))
-            else:
-                self.label_result1.setText("'" + self.label_result1.text() + "' не число:)")
+            self.label_result1.setText("= " + str(round(math.sqrt(float(self.label_result1.text())), 2)))
 
     def write_num1(self, num):
         if num == 'C' and self.label_result1.text().find("=") == -1:
