@@ -437,6 +437,7 @@ class Ui_mainWindow(object):
         self.menu.addAction(self.mExit)
         self.menubar.addAction(self.menu.menuAction())
 
+        self.setNumName(mainWindow)
         self.retranslateUi(mainWindow)
         self.btn_click()
         self.rB_real.toggled.connect(self.rbtn_click_r)
@@ -447,46 +448,50 @@ class Ui_mainWindow(object):
         self.Tabs.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(mainWindow)
 
+    def setNumName(self, mainWindow):
+            _translate = QtCore.QCoreApplication.translate
+            mainWindow.setWindowTitle(_translate("mainWindow", "Sqrt"))
+            self.btn_6.setText(_translate("mainWindow", "6"))
+            self.btn_4.setText(_translate("mainWindow", "4"))
+            self.btn_5.setText(_translate("mainWindow", "5"))
+            self.btn_9.setText(_translate("mainWindow", "9"))
+            self.btn_3.setText(_translate("mainWindow", "3"))
+            self.btn_7.setText(_translate("mainWindow", "7"))
+            self.btn_result.setText(_translate("mainWindow", "="))
+            self.btn_2.setText(_translate("mainWindow", "2"))
+            self.btn_0.setText(_translate("mainWindow", "0"))
+            self.btn_1.setText(_translate("mainWindow", "1"))
+            self.btn_8.setText(_translate("mainWindow", "8"))
+            self.label_result1.setText(_translate("mainWindow", "0"))
+            self.btn_point.setText(_translate("mainWindow", "."))
+            self.btn_clear_all.setText(_translate("mainWindow", "CE"))
+            self.btn_clear_el.setText(_translate("mainWindow", "C"))
+            self.btn_c_6.setText(_translate("mainWindow", "6"))
+            self.btn_c_2.setText(_translate("mainWindow", "2"))
+            self.btn_c_1.setText(_translate("mainWindow", "1"))
+            self.btn_c_4.setText(_translate("mainWindow", "4"))
+            self.btn_c_7.setText(_translate("mainWindow", "7"))
+            self.btn_c_result.setText(_translate("mainWindow", "="))
+            self.btn_c_5.setText(_translate("mainWindow", "5"))
+            self.btn_c_8.setText(_translate("mainWindow", "8"))
+            self.btn_c_3.setText(_translate("mainWindow", "3"))
+            self.btn_c_9.setText(_translate("mainWindow", "9"))
+            self.btn_c_0.setText(_translate("mainWindow", "0"))
+            self.btn_c_point.setText(_translate("mainWindow", "."))
+            self.lab_real.setText(_translate("mainWindow", "0"))
+            self.lab_imaginary.setText(_translate("mainWindow", "0"))
+
     def retranslateUi(self, mainWindow):
         _translate = QtCore.QCoreApplication.translate
         mainWindow.setWindowTitle(_translate("mainWindow", "Sqrt"))
-        self.btn_6.setText(_translate("mainWindow", "6"))
-        self.btn_4.setText(_translate("mainWindow", "4"))
-        self.btn_5.setText(_translate("mainWindow", "5"))
-        self.btn_9.setText(_translate("mainWindow", "9"))
-        self.btn_3.setText(_translate("mainWindow", "3"))
-        self.btn_7.setText(_translate("mainWindow", "7"))
-        self.btn_result.setText(_translate("mainWindow", "="))
-        self.btn_2.setText(_translate("mainWindow", "2"))
-        self.btn_0.setText(_translate("mainWindow", "0"))
-        self.btn_1.setText(_translate("mainWindow", "1"))
-        self.btn_8.setText(_translate("mainWindow", "8"))
-        self.label_result1.setText(_translate("mainWindow", "0"))
-        self.btn_point.setText(_translate("mainWindow", "."))
-        self.btn_clear_all.setText(_translate("mainWindow", "CE"))
-        self.btn_clear_el.setText(_translate("mainWindow", "C"))
-        self.Tabs.setTabText(self.Tabs.indexOf(self.arifm), _translate("mainWindow", "Арифметические"))
-        self.btn_c_6.setText(_translate("mainWindow", "6"))
-        self.btn_c_2.setText(_translate("mainWindow", "2"))
         self.ladel_c_res1.setText(_translate("mainWindow", "Первый корень:"))
-        self.btn_c_1.setText(_translate("mainWindow", "1"))
-        self.btn_c_4.setText(_translate("mainWindow", "4"))
-        self.btn_c_7.setText(_translate("mainWindow", "7"))
-        self.btn_c_result.setText(_translate("mainWindow", "="))
-        self.btn_c_5.setText(_translate("mainWindow", "5"))
-        self.btn_c_8.setText(_translate("mainWindow", "8"))
-        self.btn_c_3.setText(_translate("mainWindow", "3"))
-        self.btn_c_9.setText(_translate("mainWindow", "9"))
-        self.btn_c_0.setText(_translate("mainWindow", "0"))
-        self.btn_c_point.setText(_translate("mainWindow", "."))
-        self.lab_real.setText(_translate("mainWindow", "0"))
-        self.lab_imaginary.setText(_translate("mainWindow", "0"))
+        self.Tabs.setTabText(self.Tabs.indexOf(self.arifm), _translate("mainWindow", "Арифметические"))
         self.rB_real.setText(_translate("mainWindow", "Вводить \n"
-"действительную\n"
-"часть"))
+                                                      "действительную\n"
+                                                      "часть"))
         self.rB_im.setText(_translate("mainWindow", "Вводить \n"
-"мнимую\n"
-"часть"))
+                                                    "мнимую\n"
+                                                    "часть"))
         self.btn_c_minus.setText(_translate("mainWindow", "-"))
         self.btn_c_clear.setText(_translate("mainWindow", "C"))
         self.label_pl.setText(_translate("mainWindow", "+"))
@@ -511,10 +516,7 @@ class Ui_mainWindow(object):
 
     def result_c(self):
         self.clear_res()
-        if (self.lab_real.text()[0] != '-'
-            and self.lab_real.text()[0] != '.'
-            and self.lab_imaginary.text()[0] != '-'
-            and self.lab_imaginary.text()[0] != '.'):
+        if self.lab_real.text()[0] != '-' and self.lab_imaginary.text()[0] != '-':
                 a = float(self.lab_real.text())
                 b = float(self.lab_imaginary.text())
                 c = complex(str(a) + "+" + str(b) + "j")
@@ -595,7 +597,7 @@ class Ui_mainWindow(object):
         elif num == 'CE':
             self.lab_real.setText("0")
             self.lab_imaginary.setText("0")
-        elif self.lab_real.text() == '0':
+        elif self.lab_real.text() == '0' and num != '.':
             self.lab_real.setText(num)
         else:
             if len(self.lab_real.text()) < 10:
@@ -618,7 +620,7 @@ class Ui_mainWindow(object):
         elif num == 'CE':
             self.lab_real.setText("0")
             self.lab_imaginary.setText("0")
-        elif self.lab_imaginary.text() == '0':
+        elif self.lab_imaginary.text() == '0' and num != '.':
             self.lab_imaginary.setText(num)
         else:
             if len(self.lab_imaginary.text()) < 10:
@@ -662,7 +664,7 @@ class Ui_mainWindow(object):
             self.label_result1.setText("0")
         elif num == 'CE':
             self.label_result1.setText("0")
-        elif self.label_result1.text() == '0' or self.label_result1.text().find("=") != -1:
+        elif (self.label_result1.text() == '0' or self.label_result1.text().find("=") != -1) and num != '.':
             self.label_result1.setText(num)
         else:
             if len(self.label_result1.text()) < 10:
