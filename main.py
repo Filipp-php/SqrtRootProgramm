@@ -538,7 +538,7 @@ class Ui_mainWindow(object):
                 f.close()
                 messAbout.setDetailedText(response)
                 messAbout.setText('Reference')
-        messAbout.setStyleSheet("QLabel{min-width: 250px;\nmin-height: 50px}")
+        messAbout.setStyleSheet("QLabel{min-width: 200px;\nmin-height: 50px}")
         messAbout.exec_()
 
     def about_func(self):
@@ -550,7 +550,7 @@ class Ui_mainWindow(object):
         font.setFamily("Lucida Console")
         font.setPointSize(10)
         messAbout.setFont(font)
-        messAbout.setText("SqrtProgramm\nVersion 1.1\nISAS_corporation©\n2021\n")
+        messAbout.setText("SqrtProgram\nVersion 1.1\nISAS_corporation©\n2021\n")
         messAbout.exec_()
 
     def forum_func(self):
@@ -563,11 +563,10 @@ class Ui_mainWindow(object):
             suppForum.setFont(font)
             if lang['rus']:
                 suppForum.setWindowTitle("Поддержка")
-                suppForum.setText("Форум техподдержки:\nссылка"
-
+                suppForum.setText("Форум техподдержки:\nhttps://t.me/sqrt_rus")
             elif lang['en']:
                 suppForum.setWindowTitle("Support")
-                suppForum.setText("Support forum:\nlink")
+                suppForum.setText("Support forum:\nhttps://t.me/sqrt_en")
             suppForum.exec_()
 
     def setNumName(self, mainWindow):
