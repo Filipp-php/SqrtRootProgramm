@@ -428,11 +428,6 @@ class Ui_mainWindow(object):
         self.menu.addAction(self.mExit)
         self.menubar.addAction(self.menu.menuAction())
 
-        self.rus.triggered.connect(self.switch_rus)
-        self.en.triggered.connect(self.switch_en)
-        self.ref.triggered.connect(self.ref)
-        self.about.triggered.connect(self.about)
-        self.forum.triggered.connect(self.forum)
         self.mExit.triggered.connect(qApp.quit)
 
         self.setNumName(mainWindow)
@@ -450,7 +445,11 @@ class Ui_mainWindow(object):
         pass
     def switch_en(self):
         pass
+    def ref(self):
+        pass
     def about(self):
+        pass
+    def forum(self):
         pass
 
     def setNumName(self, mainWindow):
