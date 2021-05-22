@@ -1,1 +1,1 @@
-lang = {'rus': False, 'en': True, 'hello': True}
+lang = {'rus': True, 'en': False, 'hello': True}

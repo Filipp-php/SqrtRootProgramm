@@ -1,0 +1,32 @@
+Reference.
+
+This program is designed to calculate square roots from arithmetic or complex numbers.
+
+Select the Arithmetic or Complex tab by right-clicking on it.
+
+In the Arithmetic tab:
+
+Enter the number from which you want to extract the root using the number buttons.
+If the number is not an integer, use the Period (the button with the "." Symbol).
+The button with the "CE" symbol erases all entered or received value.
+The button with the "C" symbol erases one symbol from right to left from the entered value or erases the displayed value completely.
+Pressing the Equal button (with the "=" symbol) displays the result.
+
+In the Complex tab:
+
+Complex numbers are entered in the format ("integer part") + ("coefficient at i") i
+Example: 4 + 2i
+Use the "Enter real part" and "Enter imaginary part" buttons to select the window for entering the corresponding numerical values.
+Enter the number from which you want to extract the root using the number buttons.
+If the number is not an integer, use the Period (the button with the "." Symbol).
+If the number is negative, use Minus (the button with the "-" symbol)
+The button with the "CE" symbol erases all entered or received value.
+The button with the "C" symbol erases one symbol from right to left from the value entered into the selected field or erases the displayed value completely.
+Pressing the Equal button (with the "=" symbol) displays the result.
+
+Using the Menu, you can:
+Select application language: Menu -> Language -> English or Russian
+View application information: Menu -> About
+Contact Support: Menu -> Help -> Support Forum
+View help: Menu -> Help -> Help
+Exit Application: Menu -> Exit

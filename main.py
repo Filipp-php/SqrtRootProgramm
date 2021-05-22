@@ -4,11 +4,11 @@ import sys
 import math
 import cmath
 from locale import lang
-
+import codecs
 
 class Ui_mainWindow(object):
     def setupUi(self, mainWindow):
-        if not lang['hello']:  
+        if not lang['hello']:
                 hello = QMessageBox()
                 hello.setIcon(QMessageBox.Information)
                 hello.setStandardButtons(QMessageBox.Ok)
@@ -460,7 +460,7 @@ class Ui_mainWindow(object):
 
         self.rus.triggered.connect(self.switch_rus)
         self.en.triggered.connect(self.switch_en)
-        self.ref.triggered.connect(self.references)
+        self.ref.triggered.connect(self.reference)
         self.about.triggered.connect(self.about_func)
         self.forum.triggered.connect(self.forum_func)
         self.mExit.triggered.connect(qApp.quit)
@@ -516,13 +516,59 @@ class Ui_mainWindow(object):
             self.en.setChecked(True)
             self.retranslateUi(mainWindow)
 
-    def references(self):
+    def reference(self):
         messAbout = QMessageBox()
+        messAbout.setIcon(QMessageBox.Information)
+        messAbout.setStandardButtons(QMessageBox.Ok)
+        font = QtGui.QFont()
+        font.setFamily("Lucida Console")
+        font.setPointSize(10)
+        messAbout.setFont(font)
+        if lang['rus']:
+                messAbout.setWindowTitle("Справка")
+                f = codecs.open("spravka.txt", "r", "utf-8")
+                response = f.read()
+                f.close()
+                messAbout.setDetailedText(response)
+                messAbout.setText('Справка')
+        elif lang['en']:
+                messAbout.setWindowTitle("Reference")
+                f = codecs.open("reference.txt", "r", "utf-8")
+                response = f.read()
+                f.close()
+                messAbout.setDetailedText(response)
+                messAbout.setText('Reference')
+        messAbout.setStyleSheet("QLabel{min-width: 250px;\nmin-height: 50px}")
         messAbout.exec_()
+
     def about_func(self):
-        pass
+        messAbout = QMessageBox()
+        messAbout.setIcon(QMessageBox.Information)
+        messAbout.setStandardButtons(QMessageBox.Ok)
+        messAbout.setWindowTitle("Sqrt")
+        font = QtGui.QFont()
+        font.setFamily("Lucida Console")
+        font.setPointSize(10)
+        messAbout.setFont(font)
+        messAbout.setText("SqrtProgramm\nVersion 1.1\nISAS_corporation©\n2021\n")
+        messAbout.exec_()
+
     def forum_func(self):
-        pass
+            suppForum = QMessageBox()
+            suppForum.setIcon(QMessageBox.Information)
+            suppForum.setStandardButtons(QMessageBox.Ok)
+            font = QtGui.QFont()
+            font.setFamily("Lucida Console")
+            font.setPointSize(10)
+            suppForum.setFont(font)
+            if lang['rus']:
+                suppForum.setWindowTitle("Поддержка")
+                suppForum.setText("Форум техподдержки:\nссылка"
+
+            elif lang['en']:
+                suppForum.setWindowTitle("Support")
+                suppForum.setText("Support forum:\nlink")
+            suppForum.exec_()
 
     def setNumName(self, mainWindow):
             _translate = QtCore.QCoreApplication.translate
@@ -580,7 +626,7 @@ class Ui_mainWindow(object):
                 self.menu.setTitle(_translate("mainWindow", "Menu"))
                 self.lang.setTitle(_translate("mainWindow", "Language"))
                 self.help.setTitle(_translate("mainWindow", "Help"))
-                self.ref.setText(_translate("mainWindow", "References"))
+                self.ref.setText(_translate("mainWindow", "Reference"))
                 self.forum.setText(_translate("mainWindow", "Support forum"))
                 self.about.setText(_translate("mainWindow", "About the product"))
                 self.mExit.setText(_translate("mainWindow", "Exit"))
@@ -808,7 +854,6 @@ class Ui_mainWindow(object):
             self.btn_c_clear.disconnect()
         if self.btn_c_minus.isSignalConnected:
             self.btn_c_minus.disconnect()
-
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
