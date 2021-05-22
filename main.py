@@ -403,7 +403,6 @@ class Ui_mainWindow(object):
         mainWindow.setMenuBar(self.menubar)
         self.rus = QtWidgets.QAction(mainWindow)
         self.rus.setCheckable(True)
-        self.rus.setChecked(True)
         self.rus.setObjectName("rus")
         self.en = QtWidgets.QAction(mainWindow)
         self.en.setCheckable(True)
@@ -428,6 +427,11 @@ class Ui_mainWindow(object):
         self.menu.addAction(self.mExit)
         self.menubar.addAction(self.menu.menuAction())
 
+        if lang['en']:
+            self.en.setChecked(True)
+        elif lang['rus']:
+            self.rus.setChecked(True)
+
         self.rus.triggered.connect(self.switch_rus)
         self.en.triggered.connect(self.switch_en)
         self.ref.triggered.connect(self.references)
@@ -447,9 +451,28 @@ class Ui_mainWindow(object):
         QtCore.QMetaObject.connectSlotsByName(mainWindow)
 
     def switch_rus(self):
-        pass
+        if not lang['rus']:
+            f = open('locale.py', 'w+')
+            f.seek(0)
+            f.write("lang = {'rus': True,'en': False}")
+            f.close()
+            lang['rus'] = True
+            lang['en'] = False
+            self.rus.setChecked(True)
+            self.en.setChecked(False)
+            self.retranslateUi(mainWindow)
+
     def switch_en(self):
-        pass
+        if not lang['en']:
+            f = open('locale.py', 'w+')
+            f.seek(0)
+            f.write("lang = {'rus': False,'en': True}")
+            f.close()
+            lang['rus'] = False
+            lang['en'] = True
+            self.rus.setChecked(False)
+            self.en.setChecked(True)
+            self.retranslateUi(mainWindow)
     def references(self):
         pass
     def about_func(self):
