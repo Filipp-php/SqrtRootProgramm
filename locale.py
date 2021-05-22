@@ -1,0 +1,1 @@
+lang = {'rus': True, 'en': False, 'hello': True}
