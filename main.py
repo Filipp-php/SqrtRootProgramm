@@ -428,6 +428,11 @@ class Ui_mainWindow(object):
         self.menu.addAction(self.mExit)
         self.menubar.addAction(self.menu.menuAction())
 
+        self.rus.triggered.connect(self.switch_rus)
+        self.en.triggered.connect(self.switch_en)
+        self.ref.triggered.connect(self.references)
+        self.about.triggered.connect(self.about_func)
+        self.forum.triggered.connect(self.forum_func)
         self.mExit.triggered.connect(qApp.quit)
 
         self.setNumName(mainWindow)
@@ -445,11 +450,11 @@ class Ui_mainWindow(object):
         pass
     def switch_en(self):
         pass
-    def ref(self):
+    def references(self):
         pass
-    def about(self):
+    def about_func(self):
         pass
-    def forum(self):
+    def forum_func(self):
         pass
 
     def setNumName(self, mainWindow):
@@ -546,12 +551,17 @@ class Ui_mainWindow(object):
 
                 elif a != 0 and b != 0:
                     r = math.sqrt(a * a + b * b)
-                    print(r)
-                    f = math.atan(b / a)
+                    if a < 0 and b > 0:
+                        f = 3.14 + math.atan(b/a)
+                    elif a < 0 and b < 0:
+                        f = math.atan(b/a) - 3.14
+                    else:
+                        f = math.atan(b / a)
                     cos = math.cos(f / 2.0)
                     sin = math.sin(f / 2.0)
                     cos2 = math.cos((f + 2 * 3.14) / 2)
                     sin2 = math.sin((f + 2 * 3.14) / 2)
+                    print(sin2)
                     res1 = str(round(math.sqrt(r) * cos, 2)) + " + (" + str(round(math.sqrt(r) * sin, 2)) + ") * i"
                     res2 = str(round(math.sqrt(r) * cos2, 2)) + " + (" + str(round(math.sqrt(r) * sin2, 2)) + ") * i"
                     self.ladel_c_res1.setText(self.ladel_c_res1.text() + " =" + res1)
