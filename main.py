@@ -5,6 +5,7 @@ import math
 import cmath
 from locale import lang
 import codecs
+import webbrowser
 
 class Ui_mainWindow(object):
     def setupUi(self, mainWindow):
@@ -466,7 +467,7 @@ class Ui_mainWindow(object):
         self.mExit.triggered.connect(qApp.quit)
 
         self.setNumName(mainWindow)
-        self.retranslateUi()
+        self.retranslateUi(mainWindow)
         self.btn_click()
         self.rB_real.toggled.connect(self.rbtn_click_r)
         self.rB_im.toggled.connect(self.rbtn_click_i)
@@ -556,18 +557,28 @@ class Ui_mainWindow(object):
     def forum_func(self):
             suppForum = QMessageBox()
             suppForum.setIcon(QMessageBox.Information)
-            suppForum.setStandardButtons(QMessageBox.Ok)
+            suppForum.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
             font = QtGui.QFont()
             font.setFamily("Lucida Console")
             font.setPointSize(10)
             suppForum.setFont(font)
+            suppForum.buttonClicked.connect(self.choose_link)
             if lang['rus']:
                 suppForum.setWindowTitle("Поддержка")
                 suppForum.setText("Форум техподдержки:\nhttps://t.me/sqrt_rus")
+                suppForum.setInformativeText("Для перехода поссылке нажмите Ok")
             elif lang['en']:
                 suppForum.setWindowTitle("Support")
                 suppForum.setText("Support forum:\nhttps://t.me/sqrt_en")
+                suppForum.setInformativeText("Click OK to follow the link")
             suppForum.exec_()
+
+    def choose_link(self, btn):
+        if btn.text() == "OK":
+                if lang['rus']:
+                    webbrowser.open('https://t.me/sqrt_rus')
+                elif lang['en']:
+                    webbrowser.open('https://t.me/sqrt_en')
 
     def setNumName(self, mainWindow):
             _translate = QtCore.QCoreApplication.translate
@@ -609,7 +620,7 @@ class Ui_mainWindow(object):
             self.label_i.setText(_translate("mainWindow", "* i "))
             self.btn_c_clear_all.setText(_translate("mainWindow", "CE"))
 
-    def retranslateUi(self):
+    def retranslateUi(self, mainWindow):
         _translate = QtCore.QCoreApplication.translate
         if lang['en']:
                 self.ladel_c_res1.setText(_translate("mainWindow", "First result:"))
