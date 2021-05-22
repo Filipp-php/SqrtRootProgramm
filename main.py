@@ -1,5 +1,5 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtWidgets import qApp
+from PyQt5.QtWidgets import qApp, QMessageBox
 import sys
 import math
 import cmath
@@ -8,6 +8,32 @@ from locale import lang
 
 class Ui_mainWindow(object):
     def setupUi(self, mainWindow):
+        if not lang['hello']:  
+                hello = QMessageBox()
+                hello.setIcon(QMessageBox.Information)
+                hello.setStandardButtons(QMessageBox.Ok)
+                font = QtGui.QFont()
+                font.setFamily("Lucida Console")
+                font.setPointSize(10)
+                hello.setFont(font)
+                self.rb_en = QtWidgets.QRadioButton(hello)
+                self.rb_en.setText("En")
+                self.rb_en.setChecked(True)
+                self.rb_en.setGeometry(QtCore.QRect(50, 70, 50, 20))
+                self.rb_rus = QtWidgets.QRadioButton(hello)
+                self.rb_rus.setText("Рус")
+                self.rb_rus.setGeometry(QtCore.QRect(100, 70, 55, 20))
+                if lang['rus']:
+                    self.rb_rus.setChecked(True)
+                    hello.setWindowTitle("Добро пожаловать!")
+                    hello.setText("Это калькулятор квадратных корней.\nПросто попробуйте. Выберите язык")
+                elif lang['en']:
+                    self.rb_en.setChecked(True)
+                    hello.setWindowTitle("Hello!")
+                    hello.setText("This is a small sqrt calculator.\nJust try. Choose language")
+                hello.buttonClicked.connect(self.chooseLang)
+                hello.exec_()
+
         mainWindow.setObjectName("mainWindow")
         mainWindow.setFixedSize(400, 475)
         font = QtGui.QFont()
@@ -450,11 +476,27 @@ class Ui_mainWindow(object):
         self.Tabs.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(mainWindow)
 
+    def chooseLang(self, btn):
+        if self.rb_rus.isChecked():
+                f = open('locale.py', 'w+')
+                f.seek(0)
+                f.write("lang = {'rus': True, 'en': False, 'hello': True}")
+                f.close()
+                lang['rus'] = True
+                lang['en'] = False
+        else:
+                f = open('locale.py', 'w+')
+                f.seek(0)
+                f.write("lang = {'rus': False, 'en': True, 'hello': True}")
+                f.close()
+                lang['rus'] = False
+                lang['en'] = True
+
     def switch_rus(self):
         if not lang['rus']:
             f = open('locale.py', 'w+')
             f.seek(0)
-            f.write("lang = {'rus': True,'en': False}")
+            f.write("lang = {'rus': True, 'en': False, 'hello': True}")
             f.close()
             lang['rus'] = True
             lang['en'] = False
@@ -466,15 +508,17 @@ class Ui_mainWindow(object):
         if not lang['en']:
             f = open('locale.py', 'w+')
             f.seek(0)
-            f.write("lang = {'rus': False,'en': True}")
+            f.write("lang = {'rus': False, 'en': True, 'hello': True}")
             f.close()
             lang['rus'] = False
             lang['en'] = True
             self.rus.setChecked(False)
             self.en.setChecked(True)
             self.retranslateUi(mainWindow)
+
     def references(self):
-        pass
+        messAbout = QMessageBox()
+        messAbout.exec_()
     def about_func(self):
         pass
     def forum_func(self):
