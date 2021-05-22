@@ -466,7 +466,7 @@ class Ui_mainWindow(object):
         self.mExit.triggered.connect(qApp.quit)
 
         self.setNumName(mainWindow)
-        self.retranslateUi(mainWindow)
+        self.retranslateUi()
         self.btn_click()
         self.rB_real.toggled.connect(self.rbtn_click_r)
         self.rB_im.toggled.connect(self.rbtn_click_i)
@@ -609,7 +609,7 @@ class Ui_mainWindow(object):
             self.label_i.setText(_translate("mainWindow", "* i "))
             self.btn_c_clear_all.setText(_translate("mainWindow", "CE"))
 
-    def retranslateUi(self, mainWindow):
+    def retranslateUi(self):
         _translate = QtCore.QCoreApplication.translate
         if lang['en']:
                 self.ladel_c_res1.setText(_translate("mainWindow", "First result:"))
@@ -673,7 +673,6 @@ class Ui_mainWindow(object):
                     sin = math.sin(f / 2.0)
                     cos2 = math.cos((f + 2 * 3.14) / 2)
                     sin2 = math.sin((f + 2 * 3.14) / 2)
-                    print(sin2)
                     res1 = str(round(math.sqrt(r) * cos, 2)) + " + (" + str(round(math.sqrt(r) * sin, 2)) + ") * i"
                     res2 = str(round(math.sqrt(r) * cos2, 2)) + " + (" + str(round(math.sqrt(r) * sin2, 2)) + ") * i"
                     self.ladel_c_res1.setText(self.ladel_c_res1.text() + " =" + res1)
@@ -738,8 +737,12 @@ class Ui_mainWindow(object):
 
     def clear_res(self):
         if self.ladel_c_res1.text().find("=") != -1:
-            self.ladel_c_res1.setText("Первый корень:")
-            self.ladel_c_res2.setText("Второй корень:")
+            if lang['rus']:
+                    self.ladel_c_res1.setText("Первый корень:")
+                    self.ladel_c_res2.setText("Второй корень:")
+            elif lang['en']:
+                    self.ladel_c_res1.setText("First result:")
+                    self.ladel_c_res2.setText("Second result:")
 
     def write_num_real(self, num):
         self.clear_res()
