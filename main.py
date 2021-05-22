@@ -8,7 +8,7 @@ import codecs
 import webbrowser
 
 class Ui_mainWindow(object):
-    def setupUi(self, mainWindow):
+    def hello(self):
         if not lang['hello']:
                 hello = QMessageBox()
                 hello.setIcon(QMessageBox.Information)
@@ -25,16 +25,17 @@ class Ui_mainWindow(object):
                 self.rb_rus.setText("Рус")
                 self.rb_rus.setGeometry(QtCore.QRect(100, 70, 55, 20))
                 if lang['rus']:
-                    self.rb_rus.setChecked(True)
-                    hello.setWindowTitle("Добро пожаловать!")
-                    hello.setText("Это калькулятор квадратных корней.\nПросто попробуйте. Выберите язык")
+                        self.rb_rus.setChecked(True)
+                        hello.setWindowTitle("Добро пожаловать!")
+                        hello.setText("Это калькулятор квадратных корней.\nПросто попробуйте. Выберите язык")
                 elif lang['en']:
-                    self.rb_en.setChecked(True)
-                    hello.setWindowTitle("Hello!")
-                    hello.setText("This is a small sqrt calculator.\nJust try. Choose language")
+                        self.rb_en.setChecked(True)
+                        hello.setWindowTitle("Hello!")
+                        hello.setText("This is a small sqrt calculator.\nJust try. Choose language")
                 hello.buttonClicked.connect(self.chooseLang)
                 hello.exec_()
 
+    def setupUi(self, mainWindow):
         mainWindow.setObjectName("mainWindow")
         mainWindow.setFixedSize(400, 475)
         font = QtGui.QFont()
@@ -478,6 +479,7 @@ class Ui_mainWindow(object):
         QtCore.QMetaObject.connectSlotsByName(mainWindow)
 
     def chooseLang(self, btn):
+        lang['hello'] = True
         if self.rb_rus.isChecked():
                 f = open('locale.py', 'w+')
                 f.seek(0)
@@ -872,7 +874,9 @@ if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
     mainWindow = QtWidgets.QMainWindow()
     ui = Ui_mainWindow()
-    ui.setupUi(mainWindow)
-    mainWindow.show()
-    sys.exit(app.exec_())
+    ui.hello()
+    if lang['hello']:
+        ui.setupUi(mainWindow)
+        mainWindow.show()
+        sys.exit(app.exec_())
 
