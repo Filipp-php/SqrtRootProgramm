@@ -1,3 +1,3 @@
 Программный продукт готов к выпуску
 
-This product is program product for release
+This product program ready for release
