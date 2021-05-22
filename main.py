@@ -5,9 +5,10 @@ import math
 import cmath
 from locale import lang
 import codecs
+import webbrowser
 
 class Ui_mainWindow(object):
-    def setupUi(self, mainWindow):
+    def hello(self):
         if not lang['hello']:
                 hello = QMessageBox()
                 hello.setIcon(QMessageBox.Information)
@@ -24,16 +25,17 @@ class Ui_mainWindow(object):
                 self.rb_rus.setText("Рус")
                 self.rb_rus.setGeometry(QtCore.QRect(100, 70, 55, 20))
                 if lang['rus']:
-                    self.rb_rus.setChecked(True)
-                    hello.setWindowTitle("Добро пожаловать!")
-                    hello.setText("Это калькулятор квадратных корней.\nПросто попробуйте. Выберите язык")
+                        self.rb_rus.setChecked(True)
+                        hello.setWindowTitle("Добро пожаловать!")
+                        hello.setText("Это калькулятор квадратных корней.\nПросто попробуйте. Выберите язык")
                 elif lang['en']:
-                    self.rb_en.setChecked(True)
-                    hello.setWindowTitle("Hello!")
-                    hello.setText("This is a small sqrt calculator.\nJust try. Choose language")
+                        self.rb_en.setChecked(True)
+                        hello.setWindowTitle("Hello!")
+                        hello.setText("This is a small sqrt calculator.\nJust try. Choose language")
                 hello.buttonClicked.connect(self.chooseLang)
                 hello.exec_()
 
+    def setupUi(self, mainWindow):
         mainWindow.setObjectName("mainWindow")
         mainWindow.setFixedSize(400, 475)
         font = QtGui.QFont()
@@ -477,6 +479,7 @@ class Ui_mainWindow(object):
         QtCore.QMetaObject.connectSlotsByName(mainWindow)
 
     def chooseLang(self, btn):
+        lang['hello'] = True
         if self.rb_rus.isChecked():
                 f = open('locale.py', 'w+')
                 f.seek(0)
@@ -556,18 +559,28 @@ class Ui_mainWindow(object):
     def forum_func(self):
             suppForum = QMessageBox()
             suppForum.setIcon(QMessageBox.Information)
-            suppForum.setStandardButtons(QMessageBox.Ok)
+            suppForum.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
             font = QtGui.QFont()
             font.setFamily("Lucida Console")
             font.setPointSize(10)
             suppForum.setFont(font)
+            suppForum.buttonClicked.connect(self.choose_link)
             if lang['rus']:
                 suppForum.setWindowTitle("Поддержка")
                 suppForum.setText("Форум техподдержки:\nhttps://t.me/sqrt_rus")
+                suppForum.setInformativeText("Для перехода поссылке нажмите Ok")
             elif lang['en']:
                 suppForum.setWindowTitle("Support")
                 suppForum.setText("Support forum:\nhttps://t.me/sqrt_en")
+                suppForum.setInformativeText("Click OK to follow the link")
             suppForum.exec_()
+
+    def choose_link(self, btn):
+        if btn.text() == "OK":
+                if lang['rus']:
+                    webbrowser.open('https://t.me/sqrt_rus')
+                elif lang['en']:
+                    webbrowser.open('https://t.me/sqrt_en')
 
     def setNumName(self, mainWindow):
             _translate = QtCore.QCoreApplication.translate
@@ -673,7 +686,6 @@ class Ui_mainWindow(object):
                     sin = math.sin(f / 2.0)
                     cos2 = math.cos((f + 2 * 3.14) / 2)
                     sin2 = math.sin((f + 2 * 3.14) / 2)
-                    print(sin2)
                     res1 = str(round(math.sqrt(r) * cos, 2)) + " + (" + str(round(math.sqrt(r) * sin, 2)) + ") * i"
                     res2 = str(round(math.sqrt(r) * cos2, 2)) + " + (" + str(round(math.sqrt(r) * sin2, 2)) + ") * i"
                     self.ladel_c_res1.setText(self.ladel_c_res1.text() + " =" + res1)
@@ -738,8 +750,12 @@ class Ui_mainWindow(object):
 
     def clear_res(self):
         if self.ladel_c_res1.text().find("=") != -1:
-            self.ladel_c_res1.setText("Первый корень:")
-            self.ladel_c_res2.setText("Второй корень:")
+            if lang['rus']:
+                    self.ladel_c_res1.setText("Первый корень:")
+                    self.ladel_c_res2.setText("Второй корень:")
+            elif lang['en']:
+                    self.ladel_c_res1.setText("First result:")
+                    self.ladel_c_res2.setText("Second result:")
 
     def write_num_real(self, num):
         self.clear_res()
@@ -858,7 +874,9 @@ if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
     mainWindow = QtWidgets.QMainWindow()
     ui = Ui_mainWindow()
-    ui.setupUi(mainWindow)
-    mainWindow.show()
-    sys.exit(app.exec_())
+    ui.hello()
+    if lang['hello']:
+        ui.setupUi(mainWindow)
+        mainWindow.show()
+        sys.exit(app.exec_())
 
