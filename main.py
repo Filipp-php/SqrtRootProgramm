@@ -1,5 +1,6 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import qApp, QMessageBox
+from PyQt5.QtGui import QIcon
 import sys
 import math
 import cmath
@@ -13,6 +14,7 @@ class Ui_mainWindow(object):
                 hello = QMessageBox()
                 hello.setIcon(QMessageBox.Information)
                 hello.setStandardButtons(QMessageBox.Ok)
+                hello.setWindowIcon(QIcon("images/root.png"))
                 font = QtGui.QFont()
                 font.setFamily("Lucida Console")
                 font.setPointSize(10)
@@ -38,6 +40,7 @@ class Ui_mainWindow(object):
     def setupUi(self, mainWindow):
         mainWindow.setObjectName("mainWindow")
         mainWindow.setFixedSize(400, 475)
+        mainWindow.setWindowIcon(QIcon("images/root.png"))
         font = QtGui.QFont()
         font.setFamily("Lucida Console")
         font.setPointSize(10)
@@ -523,6 +526,7 @@ class Ui_mainWindow(object):
         messAbout = QMessageBox()
         messAbout.setIcon(QMessageBox.Information)
         messAbout.setStandardButtons(QMessageBox.Ok)
+        messAbout.setWindowIcon(QIcon("images/root.png"))
         font = QtGui.QFont()
         font.setFamily("Lucida Console")
         font.setPointSize(10)
@@ -548,6 +552,7 @@ class Ui_mainWindow(object):
         messAbout = QMessageBox()
         messAbout.setIcon(QMessageBox.Information)
         messAbout.setStandardButtons(QMessageBox.Ok)
+        messAbout.setWindowIcon(QIcon("images/root.png"))
         messAbout.setWindowTitle("Sqrt")
         font = QtGui.QFont()
         font.setFamily("Lucida Console")
@@ -560,6 +565,7 @@ class Ui_mainWindow(object):
             suppForum = QMessageBox()
             suppForum.setIcon(QMessageBox.Information)
             suppForum.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
+            suppForum.setWindowIcon(QIcon("images/root.png"))
             font = QtGui.QFont()
             font.setFamily("Lucida Console")
             font.setPointSize(10)
